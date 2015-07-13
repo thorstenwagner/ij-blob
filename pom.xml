@@ -33,6 +33,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
   	 		<version>1.49r</version>
 		</dependency>
 	</dependencies>
+	
 	<developers>
 		<developer>
 			<id>twagner</id>
@@ -43,5 +44,19 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 			</properties>
 		</developer>
 	</developers>
-
+	<build>
+		<plugins>
+			<plugin>
+		  		<groupId>org.sonatype.plugins</groupId>
+		  		<artifactId>nexus-staging-maven-plugin</artifactId>
+		  		<version>1.6.3</version>
+		  		<extensions>true</extensions>
+		  		<configuration>
+		     		<serverId>16559</serverId>
+		     		<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+		     		<autoReleaseAfterClose>true</autoReleaseAfterClose>
+		  		</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
