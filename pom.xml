@@ -12,6 +12,20 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<name>IJBlob</name>
 	<description>Conntected Components Library for ImageJ.</description>
 	<url>https://github.com/jumpfunky/ij-blob</url>
+	
+	<licenses>
+  		<license>
+   		 	<name>GNU v3 License</name>
+    		<url>http://opensource.org/licenses/GPL-3.0</url>
+  		</license>
+	</licenses>
+	
+	<scm>
+		<url>https://github.com/thorstenwagner/ij-blob</url>
+		<connection>scm:git:git://github.com/thorstenwagner/ij-blob.git</connection>
+		<developerConnection>scm:git:git@github.com:thorstenwagner/ij-blob.git</developerConnection>
+	</scm>
+	
  	<dependencies>
 		<dependency>
    	 		<groupId>net.imagej</groupId>
