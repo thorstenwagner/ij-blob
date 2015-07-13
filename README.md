@@ -15,8 +15,6 @@ In addition nested objects are identified:
 
 ![](https://dl.dropbox.com/u/560426/components3.jpg)
 
-The ImageJ Shape Filter Plugin (see downloads) uses this library for flitering the blobs by its shape.
-
 If you are using IJBlob in a scientific publication, please cite:
 
 Wagner, T and Lipinski, H 2013. IJBlob: An ImageJ Library for Connected Component Analysis and Shape Analysis. Journal of Open Research Software 1(1):e6, DOI: http://dx.doi.org/10.5334/jors.ae
@@ -53,11 +51,6 @@ IJBlob 1.1 introduces a filter and extension framework! Please see the HowToUSE 
   * Orientation
   * Outer Contour as Freeman-Chain-Code
 * Rendering of Blobs and its Convex Hull
-
-## Features of Shape Filter Plugin
-Remove objects by some basic features (see the bold features above).
-
-![](https://dl.dropbox.com/u/560426/imagej/gui_.png)
 
 ### Restrictions:
 The object/background has to be black (0) or white (255)
