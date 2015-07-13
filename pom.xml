@@ -10,7 +10,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<packaging>jar</packaging>
  
 	<name>IJBlob</name>
-	<description>Conntected Components Library for ImageJ.</description>
+	<description>Connected Components Library for ImageJ.</description>
 	<url>https://github.com/jumpfunky/ij-blob</url>
 	
 	<licenses>
