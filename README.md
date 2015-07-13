@@ -20,7 +20,7 @@ If you are using IJBlob in a scientific publication, please cite:
 Wagner, T and Lipinski, H 2013. IJBlob: An ImageJ Library for Connected Component Analysis and Shape Analysis. Journal of Open Research Software 1(1):e6, DOI: http://dx.doi.org/10.5334/jors.ae
 
 ##Features of IJBlob
-IJBlob 1.1 introduces a filter and extension framework! Please see the HowToUSE for more information
+IJBlob 1.1 introduces a filter and extension framework! Please see the [wiki page](https://github.com/thorstenwagner/ij-blob/wiki/Examples-and-Tutorials)  for more information
 
 * Extract the outer contour of each blob.
 * Extracts also all inner contours of each blob (holes).
