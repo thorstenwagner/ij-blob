@@ -25,7 +25,7 @@ IJBlob 1.1 introduces a filter and extension framework! Please see the HowToUSE 
 * Extract the outer contour of each blob.
 * Extracts also all inner contours of each blob (holes).
 * Detects also nested objects (blob in blob).
-* Calculates BasicFeatures of the blob.
+* Calculates [basic features](https://github.com/thorstenwagner/ij-blob/wiki/Description-Basic-Features) of the blob.
   * Center of Gravity
   * Enclosed Area
   * Area Convex Hull
