@@ -30,6 +30,11 @@
    	 		<artifactId>ij</artifactId>
   	 		<version>1.49r</version>
 		</dependency>
+		<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+   			<version>4.12</version>
+		</dependency>
 	</dependencies>
 	
 	<developers>

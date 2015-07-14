@@ -1,4 +1,4 @@
-package test;
+package ij.blob.tests;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +16,7 @@ public class FeatureTest {
 	
 	@Test
 	public void testCustomBlobFeature() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -32,7 +32,7 @@ public class FeatureTest {
 	
 	@Test
 	public void testCustomBlobFeature2() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -47,7 +47,7 @@ public class FeatureTest {
 	
 	@Test
 	public void testFilterCustomBlobFeature() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -61,7 +61,7 @@ public class FeatureTest {
 	
 	@Test (expected=IllegalArgumentException.class)
 	public void testFilterCustomBlobFeatureWrongArgument() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -75,7 +75,7 @@ public class FeatureTest {
 	
 	@Test
 	public void testFilterCustomBlobFeature2() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -90,7 +90,7 @@ public class FeatureTest {
 
 	@Test
 	public void testGetCenterOfGravity() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -107,7 +107,7 @@ public class FeatureTest {
 	
 	@Test
 	public void testGetMinimumBoundingRectangle() {
-		URL url = this.getClass().getResource("rotatedsquare2.tif");
+		URL url = this.getClass().getClassLoader().getResource("rotatedsquare2.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -119,7 +119,7 @@ public class FeatureTest {
 
 	@Test
 	public void testGetPerimeterCircleRad30() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int peri = (int)(2*Math.PI*29.5);
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -129,7 +129,7 @@ public class FeatureTest {
 
 	@Test
 	public void testGetPerimeterConvexHull() {
-		URL url = this.getClass().getResource("square100x100_minus30x30.png");
+		URL url = this.getClass().getClassLoader().getResource("square100x100_minus30x30.png");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int periConv = 4*100-4; //400-4(-4 Because the Edges doesnt mutiple counted 
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -139,7 +139,7 @@ public class FeatureTest {
 
 	@Test
 	public void testEnclosedAreaCircleRad30() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int area = (int)(Math.PI*29.5*29.5);
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -150,7 +150,7 @@ public class FeatureTest {
 	
 	@Test
 	public void testFilterEnclosedAreaSqaures() {
-		URL url = this.getClass().getResource("squares_20x20_30x30.tif");
+		URL url = this.getClass().getClassLoader().getResource("squares_20x20_30x30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int areaSmallSquare = (19*19);
 		int areaBigSquare = (29*29);
@@ -164,7 +164,7 @@ public class FeatureTest {
 
 	@Test
 	public void testGetCircularity() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -176,7 +176,7 @@ public class FeatureTest {
 
 	@Test
 	public void testGetThinnesRatio() {
-		URL url = this.getClass().getResource("circle_r30.tif");
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int circ = 1;
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -186,7 +186,7 @@ public class FeatureTest {
 
 	@Test
 	public void testFind4holes() {
-		URL url = this.getClass().getResource("nestedObjects.tif");
+		URL url = this.getClass().getClassLoader().getResource("nestedObjects.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int holes = 4;
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -196,7 +196,7 @@ public class FeatureTest {
 	
 	@Test
 	public void testFindThreeBlobs() {
-		URL url = this.getClass().getResource("3blobs.tif");
+		URL url = this.getClass().getClassLoader().getResource("3blobs.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int count = 3;
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -205,7 +205,7 @@ public class FeatureTest {
 	}
 	@Test
 	public void testNestedFindFiveBlobs() {
-		URL url = this.getClass().getResource("nestedObjects.tif");
+		URL url = this.getClass().getClassLoader().getResource("nestedObjects.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int blobs = 5;
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -216,7 +216,7 @@ public class FeatureTest {
 	@Test
 	public void testGetOuterContourIsCorrect() {
         //Pfad des Beispielbildes
-        URL url = this.getClass().getResource("correctcontour.png");
+        URL url = this.getClass().getClassLoader().getResource("correctcontour.png");
         //Lade das Beispielbild
         ImagePlus ip = new ImagePlus(url.getPath());
  

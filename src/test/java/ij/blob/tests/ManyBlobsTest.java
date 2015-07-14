@@ -1,4 +1,4 @@
-package test;
+package ij.blob.tests;
 import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
@@ -12,7 +12,7 @@ import org.junit.Test;
 public class ManyBlobsTest {
 	@Test
 	public void testFilterBlobs () {
-		URL url = this.getClass().getResource("3blobs.tif");
+		URL url = this.getClass().getClassLoader().getResource("3blobs.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -21,7 +21,7 @@ public class ManyBlobsTest {
 	}
 	@Test
 	public void testFilterBlobs_NoUpperLimit () {
-		URL url = this.getClass().getResource("3blobs.tif");
+		URL url = this.getClass().getClassLoader().getResource("3blobs.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -31,7 +31,7 @@ public class ManyBlobsTest {
 	
 	@Test
 	public void testBlobsOnBorder() {
-		URL url = this.getClass().getResource("squaresOnBoarder.tif");
+		URL url = this.getClass().getClassLoader().getResource("squaresOnBoarder.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		
@@ -41,7 +41,7 @@ public class ManyBlobsTest {
 	
 	@Test
 	public void testBlobsOnBorderInvertedLUT() {
-		URL url = this.getClass().getResource("squaresOnBoarder.tif");
+		URL url = this.getClass().getClassLoader().getResource("squaresOnBoarder.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ip.getProcessor().invertLut();
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -51,7 +51,7 @@ public class ManyBlobsTest {
 	
 	@Test
 	public void testBlobsOnBorderInverted() {
-		URL url = this.getClass().getResource("squaresOnBoarderInv.tif");
+		URL url = this.getClass().getClassLoader().getResource("squaresOnBoarderInv.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.setBackground(0);
@@ -61,7 +61,7 @@ public class ManyBlobsTest {
 	
 	@Test 
 	public void testBlackBackground() {
-		URL url = this.getClass().getResource("3blobs.tif");
+		URL url = this.getClass().getClassLoader().getResource("3blobs.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ip.getProcessor().invert();
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -72,7 +72,7 @@ public class ManyBlobsTest {
 	
 	@Test
 	public void testGetSpecificBlobNotFound() {
-		URL url = this.getClass().getResource("squares_20x20_30x30.tif");
+		URL url = this.getClass().getClassLoader().getResource("squares_20x20_30x30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -82,7 +82,7 @@ public class ManyBlobsTest {
 	
 	@Test
 	public void testGetSpecificBlob() {
-		URL url = this.getClass().getResource("squares_20x20_30x30.tif");
+		URL url = this.getClass().getClassLoader().getResource("squares_20x20_30x30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -93,7 +93,7 @@ public class ManyBlobsTest {
 	@Test
 	public void testBlobOnBorder_right() {
 		
-		URL url = this.getClass().getResource("squareOnBoarder_right.tif");
+		URL url = this.getClass().getClassLoader().getResource("squareOnBoarder_right.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
@@ -114,7 +114,7 @@ public class ManyBlobsTest {
 	
 	@Test
 	public void testComplexImageNoException() {
-		URL url = this.getClass().getResource("complexImage.tif");
+		URL url = this.getClass().getClassLoader().getResource("complexImage.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		try{

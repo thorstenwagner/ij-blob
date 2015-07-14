@@ -1,4 +1,4 @@
-package test;
+package ij.blob.tests;
 
 import ij.blob.*;
 
