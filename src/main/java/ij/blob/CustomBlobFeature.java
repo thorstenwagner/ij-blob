@@ -8,7 +8,6 @@ public abstract class CustomBlobFeature {
 
 	private Blob blob;
 	
-	
 	void setup(Blob blob){
 		this.blob = blob;
 	}

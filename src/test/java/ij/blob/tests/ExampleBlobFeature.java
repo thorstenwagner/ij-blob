@@ -22,5 +22,4 @@ public class ExampleBlobFeature extends CustomBlobFeature {
 		return 5;
 	}
 	
-	
 }

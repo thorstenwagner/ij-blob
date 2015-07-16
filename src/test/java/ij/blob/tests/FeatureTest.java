@@ -253,5 +253,23 @@ public class FeatureTest {
         //Überprüfe ob die Differenz 0 ergibt. Dann sind beide Konturen gleich.
         assertEquals(0,diff,0);
 	}
+	@Test
+	public void testFind5ObjectsOnEdge(){
+		
+		URL url = this.getClass().getClassLoader().getResource("FiveBlobsOnEdge.tif");
+		ImagePlus ip = new ImagePlus(url.getPath());
+        //Analysiere die Blobs
+        ManyBlobs mb = new ManyBlobs(ip);
+       // mb.setBackground(0);
+        mb.findConnectedComponents();
+        
+        int objectOnEdgeCounter=0;
+        for (Blob blob : mb) {
+			if(blob.isOnEdge(ip.getProcessor())){
+				objectOnEdgeCounter++;
+			}
+		}
+        assertEquals(5,objectOnEdgeCounter,0);
+	}
 
 }

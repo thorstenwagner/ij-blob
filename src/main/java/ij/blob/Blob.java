@@ -801,6 +801,25 @@ public class Blob {
 	}
 	
 	/**
+	 * Checks if the blob is on the edge of the image.
+	 * @param ip The imageprocesser which contains the blob
+	 * @return true if the blob is on a edge.
+	 */
+	public boolean isOnEdge(ImageProcessor ip){
+		
+		Polygon p = getOuterContour();
+		for(int i = 0; i < p.npoints; i++){
+			int x = p.xpoints[i];
+			int y = p.ypoints[i];
+			if(x == 0 || y == 0 || x == (ip.getWidth()-1) || y == (ip.getHeight()-1)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Method name of getSolidity (for filtering).
 	 */
 	public final static String GETSOLIDITY = "getSolidity";
