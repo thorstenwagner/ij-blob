@@ -257,6 +257,7 @@ public class Blob {
 		draw(ip,DRAW_HOLES,col);
 	}
 	
+	@SuppressWarnings("unused")
 	private final double getArea(Polygon p) {
 		if (p==null) return Double.NaN;
 		
@@ -703,14 +704,14 @@ public class Blob {
 		
 		peri = sum_gerade*0.948 + (cc.length-sum_gerade)*1.340;
 		
+		IJ.log("Peri CC: " + peri);
 		
-		/*
 		PolygonRoi roi = new PolygonRoi(outerContour, Roi.POLYLINE);
 		ImagePlus dummy = new ImagePlus();
 		dummy.setCalibration(cal);
 		roi.setImage(dummy);
-		IJ.log("Peri " + roi.getLength());
-		*/
+		IJ.log("Peri Roi" + roi.getLength());
+		
 		return peri;
 	}
 	
@@ -892,7 +893,12 @@ public class Blob {
 		int[] cc = contourToChainCode(getOuterContour());
 		enclosedArea = getAreaOfChainCode(cc)*cal.pixelHeight*cal.pixelWidth;
 		*/
-		enclosedArea = getArea(getOuterContour())*cal.pixelHeight*cal.pixelWidth;
+		
+		//enclosedArea = getArea(getOuterContour())*cal.pixelHeight*cal.pixelWidth;
+		
+		ImagePlus imp = generateBlobImage(this);
+		enclosedArea = imp.getStatistics().histogram[0]*cal.pixelHeight*cal.pixelWidth;
+		
 		return enclosedArea;
 	}
 	
@@ -921,7 +927,11 @@ public class Blob {
 		areaConvexHull /= 2.0;
 		areaConvexHull = Math.abs(areaConvexHull)*cal.pixelHeight*cal.pixelWidth;;
 		*/
-		areaConvexHull = getArea(polyPoints)*cal.pixelHeight*cal.pixelWidth;
+		
+		Blob helpblob = new Blob(polyPoints, -1);
+		ImagePlus imp = generateBlobImage(helpblob);
+		areaConvexHull = imp.getStatistics().getHistogram()[0];
+		//areaConvexHull = getArea(polyPoints)*cal.pixelHeight*cal.pixelWidth;
 		return areaConvexHull;
 	}
 	
@@ -1010,6 +1020,16 @@ public class Blob {
 		fractalBoxDimension = FDandGOF[0];
 		fractalDimensionGoodness = FDandGOF[1];
 		return fractalBoxDimension;
+	}
+	
+	public static ImagePlus generateBlobImage(Blob b){
+		Rectangle r = b.getOuterContour().getBounds();
+		r.setBounds(r.x, r.y, (int)r.getWidth()+1, (int)r.getHeight()+1);
+		ImagePlus help = NewImage.createByteImage("", r.width, r.height, 1, NewImage.FILL_WHITE);
+		ImageProcessor ip = help.getProcessor();
+		b.draw(ip, Blob.DRAW_HOLES, -r.x, -r.y);
+		help.setProcessor(ip);
+		return help;
 	}
 	
 	/**

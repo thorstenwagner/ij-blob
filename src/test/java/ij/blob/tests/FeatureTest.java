@@ -99,12 +99,13 @@ public class FeatureTest {
 		double diff = Math.abs(48-centerx)+Math.abs(48-centery);
 		assertEquals(0, diff,0);
 	}
-
+/*
 	@Test
 	public void testGetElongation() {
+		
 		fail("Not yet implemented");
 	}
-	
+	*/
 	@Test
 	public void testGetMinimumBoundingRectangle() {
 		URL url = this.getClass().getClassLoader().getResource("rotatedsquare2.tif");
@@ -121,11 +122,22 @@ public class FeatureTest {
 	public void testGetPerimeterCircleRad30() {
 		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
-		int peri = (int)(2*Math.PI*29.5);
+		int peri = (int)(2*Math.PI*30);
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
-		assertEquals(peri, mb.get(0).getPerimeter(),2);
+		assertEquals(peri, mb.get(0).getPerimeter(),peri*0.02);
 	}
+	
+	@Test
+	public void testGetPerimeterConvexHull2() {
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
+		ImagePlus ip = new ImagePlus(url.getPath());
+		int periConv = (int)(2*Math.PI*30);
+		ManyBlobs mb = new ManyBlobs(ip);
+		mb.findConnectedComponents();
+		assertEquals(periConv, mb.get(0).getPerimeterConvexHull(),periConv*0.02);
+	}
+	
 
 	@Test
 	public void testGetPerimeterConvexHull() {
@@ -141,10 +153,10 @@ public class FeatureTest {
 	public void testEnclosedAreaCircleRad30() {
 		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
-		int area = (int)(Math.PI*29.5*29.5);
+		int area = (int)(Math.PI*30*30);
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
-		assertEquals(area, mb.get(0).getEnclosedArea(),10);
+		assertEquals(area, mb.get(0).getEnclosedArea(),3);
 		
 	}
 	
@@ -152,8 +164,8 @@ public class FeatureTest {
 	public void testFilterEnclosedAreaSqaures() {
 		URL url = this.getClass().getClassLoader().getResource("squares_20x20_30x30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
-		int areaSmallSquare = (19*19);
-		int areaBigSquare = (29*29);
+		int areaSmallSquare = (20*20);
+		int areaBigSquare = (30*30);
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
 		ManyBlobs filter = mb.filterBlobs(areaSmallSquare+1, Blob.GETENCLOSEDAREA);
@@ -170,7 +182,7 @@ public class FeatureTest {
 		mb.findConnectedComponents();
 		
 		double expectedCircularity = 4*Math.PI;
-		assertEquals(expectedCircularity, mb.get(0).getCircularity(),0.1);
+		assertEquals(expectedCircularity, mb.get(0).getCircularity(),0.5);
 		
 	}
 
