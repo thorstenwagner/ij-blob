@@ -704,13 +704,13 @@ public class Blob {
 		
 		peri = sum_gerade*0.948 + (cc.length-sum_gerade)*1.340;
 		
-		IJ.log("Peri CC: " + peri);
+
 		
 		PolygonRoi roi = new PolygonRoi(outerContour, Roi.POLYLINE);
 		ImagePlus dummy = new ImagePlus();
 		dummy.setCalibration(cal);
 		roi.setImage(dummy);
-		IJ.log("Peri Roi" + roi.getLength());
+
 		
 		return peri;
 	}
