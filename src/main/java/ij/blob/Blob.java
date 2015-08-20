@@ -427,6 +427,7 @@ public class Blob {
 		return centralMoment;
 	}
 	
+	public final static String GETORIENTATIONMAJORAXIS = "getOrientationMajorAxis";
 	/**
 	 * @return The Orientation of the Major Axis from the Blob in grad (measured counter clockwise from the positive x axis).
 	 */
@@ -440,6 +441,7 @@ public class Blob {
 		return orientation;
 	}
 	
+	public final static String GETORIENTATIONMINORAXIS = "getOrientationMinorAxis";
 	/**
 	 * @return The Orientation of the Major Axis from the Blob in grad (measured counter clockwise from the positive x axis).
 	 */

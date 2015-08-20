@@ -16,13 +16,14 @@
     		<url>http://opensource.org/licenses/GPL-3.0</url>
   		</license>
 	</licenses>
+
 	
 	<scm>
 		<url>https://github.com/thorstenwagner/ij-blob</url>
 		<connection>scm:git:git://github.com/thorstenwagner/ij-blob.git</connection>
 		<developerConnection>scm:git:git@github.com:thorstenwagner/ij-blob.git</developerConnection>
 	  <tag>HEAD</tag>
-  </scm>
+   </scm>
 	
  	<dependencies>
 		<dependency>
