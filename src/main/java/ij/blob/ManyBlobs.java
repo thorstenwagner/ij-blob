@@ -250,10 +250,19 @@ public class ManyBlobs extends ArrayList<Blob> {
 				}
 				else if (Double.isInfinite(upperLimit)) {
 					included =  (value >= lowerLimit) ? true : false;
+					if(!included){
+						included = (Math.abs(lowerLimit-value)<0.0001) ? true:false;
+					}
 				}
 				else
 				{
 					included = (value >= lowerLimit && value <= upperLimit) ? true : false;
+					if(!included){
+					included = (!included && Math.abs(lowerLimit-value)<0.0001) ? true:false;
+					}
+					if(!included){
+					included = (!included && Math.abs(upperLimit-value)<0.0001) ? true:false;
+					}
 				}
 				if(included){
 					blobs.add(this.get(i));

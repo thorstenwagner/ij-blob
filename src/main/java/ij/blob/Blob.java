@@ -437,7 +437,9 @@ public class Blob {
 		}
 		fitEllipse();
 		orientation = fittedEllipse.angle; 
-		
+		if(Math.abs(orientation-180)<0.01){
+			orientation = 0;
+		}
 		return orientation;
 	}
 	
