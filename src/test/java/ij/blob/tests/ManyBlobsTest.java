@@ -11,7 +11,7 @@ import ij.blob.ManyBlobs;
 import org.junit.Test;
 public class ManyBlobsTest {
 	@Test
-	public void testFilterBlobs () {
+	public void testFilterBlobs () throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("3blobs.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -20,7 +20,7 @@ public class ManyBlobsTest {
 		assertEquals(1, t.size(),0);
 	}
 	@Test
-	public void testFilterBlobs_NoUpperLimit () {
+	public void testFilterBlobs_NoUpperLimit () throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("3blobs.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);

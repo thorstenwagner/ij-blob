@@ -15,7 +15,24 @@ import org.junit.Test;
 public class FeatureTest {
 	
 	@Test
-	public void testCustomBlobFeature() {
+	public void testSpecialBlobFeature() throws NoSuchMethodException {
+		URL url = this.getClass().getClassLoader().getResource("3blobs.tif");
+		ImagePlus ip = new ImagePlus(url.getPath());
+		ManyBlobs mb = new ManyBlobs(ip);
+		mb.findConnectedComponents();
+		MyBlobFeature test = new MyBlobFeature();
+		Blob.addCustomFeature(test);
+		int a  = 10;
+		float c = 1.5f;
+		ManyBlobs filtered = mb.filterBlobs(0,10, "LocationFeature",ip.getWidth(),ip.getHeight());
+		assertEquals(0, filtered.size()); //All blobs have a greater distance. So it should be 0
+		
+		filtered = mb.filterBlobs(0,600, "LocationFeature",ip.getWidth(),ip.getHeight());
+		assertEquals(3, filtered.size()); //All blobs have a distance inside the threshold. No blob should be filtered.
+	}
+	
+	@Test
+	public void testCustomBlobFeature() throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -31,7 +48,7 @@ public class FeatureTest {
 	}
 	
 	@Test
-	public void testCustomBlobFeature2() {
+	public void testCustomBlobFeature2() throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -46,7 +63,7 @@ public class FeatureTest {
 	}
 	
 	@Test
-	public void testFilterCustomBlobFeature() {
+	public void testFilterCustomBlobFeature() throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -59,8 +76,8 @@ public class FeatureTest {
 		assertEquals(filtered.size(), 0,0);
 	}
 	
-	@Test (expected=IllegalArgumentException.class)
-	public void testFilterCustomBlobFeatureWrongArgument() {
+	@Test
+	public void testFilterCustomBlobFeatureWrongArgument() throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -69,12 +86,13 @@ public class FeatureTest {
 		Blob.addCustomFeature(test);
 		int a = 10;
 		int b = 20;
-		mb.filterBlobs(6, "myFourthFancyFeature",a,b);
+		ManyBlobs result = mb.filterBlobs(6, "myFourthFancyFeature",a,b);
+		assertEquals(null, result);
 	}
 	
 	
 	@Test
-	public void testFilterCustomBlobFeature2() {
+	public void testFilterCustomBlobFeature2() throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
@@ -99,6 +117,17 @@ public class FeatureTest {
 		double diff = Math.abs(48-centerx)+Math.abs(48-centery);
 		assertEquals(0, diff,0);
 	}
+	
+	@Test
+	public void testGetDiameterMaximumInscribedCircle() {
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
+		ImagePlus ip = new ImagePlus(url.getPath());
+		ManyBlobs mb = new ManyBlobs(ip);
+		mb.findConnectedComponents();
+		double max = mb.get(0).getDiamaterMaximumInscribedCircle();
+		assertEquals(60, max,2);
+	}
+
 /*
 	@Test
 	public void testGetElongation() {
@@ -161,7 +190,7 @@ public class FeatureTest {
 	}
 	
 	@Test
-	public void testFilterEnclosedAreaSqaures() {
+	public void testFilterEnclosedAreaSqaures() throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("squares_20x20_30x30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
 		int areaSmallSquare = (20*20);

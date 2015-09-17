@@ -23,8 +23,11 @@ import ij.gui.NewImage;
 import ij.gui.PolygonRoi;
 import ij.gui.Roi;
 import ij.measure.Calibration;
+import ij.plugin.filter.EDM;
+import ij.plugin.filter.MaximumFinder;
 import ij.process.ByteProcessor;
 import ij.process.EllipseFitter;
+import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 import ij.process.PolygonFiller;
 
@@ -117,8 +120,9 @@ public class Blob {
 	 * Evaluates the Custom Feature and return its value
 	 * @param Method name The method name of the method in the feature class
 	 * @param params the parameters of the method specified by the method name
+	 * @throws NoSuchMethodException 
 	 */
-	public Object evaluateCustomFeature(String methodName, Object... params) {
+	public Object evaluateCustomFeature(String methodName, Object... params) throws NoSuchMethodException {
 		Boolean methodfound = false;
 		int featureIndex = -1;
 		for(int i = 0; i < customFeatures.size(); i++){
@@ -149,8 +153,7 @@ public class Blob {
 			value = m.invoke((customFeatures.get(featureIndex)), params);
 			
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new NoSuchMethodException("The method " + methodName + " was not found");
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1043,6 +1046,24 @@ public class Blob {
 		fractalBoxDimension = FDandGOF[0];
 		fractalDimensionGoodness = FDandGOF[1];
 		return fractalBoxDimension;
+	}
+	
+	/**
+	 * Method name of getMaximumInscribedCircle (for filtering).
+	 */
+	public final static String GETMAXIMUMINSCRIBEDCIRCLE = "getMaximumInscribedCircle";
+	public double getDiamaterMaximumInscribedCircle() {
+		ImagePlus help = generateBlobImage(this);
+		ImageProcessor ipHelp = help.getProcessor();
+		ipHelp.invert();
+		EDM dm = new EDM();
+		FloatProcessor fp = dm.makeFloatEDM (ipHelp, 0, false);
+		
+		MaximumFinder mf  = new MaximumFinder();
+		ByteProcessor bp = mf.findMaxima(fp, 0.5, ImageProcessor.NO_THRESHOLD, MaximumFinder.SINGLE_POINTS, false, true);
+		Polygon pl = mf.getMaxima(bp, 0, true);
+		return fp.getf(pl.xpoints[0], pl.ypoints[0])*2*cal.getX(1);
+		
 	}
 	
 	public static ImagePlus generateBlobImage(Blob b){

@@ -163,7 +163,6 @@ public class ManyBlobs extends ArrayList<Blob> {
 		return null;
 	}
 
-	
 	/**
 	 * Filter all blobs which feature (specified by the methodName) is higher than 
 	 * the lowerLimit or lower than the upper limit.
@@ -174,6 +173,28 @@ public class ManyBlobs extends ArrayList<Blob> {
 	 * @return The filtered blobs.
 	 */
 	public ManyBlobs filterBlobs(double lowerLimit, double upperLimit, String methodName, Object... methodparams){
+		ManyBlobs result = null;
+		try {
+			result = filterBlobs2(lowerLimit,upperLimit,methodName,methodparams);
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			IJ.error("The method " + methodName + "does not exist");
+			e.printStackTrace();
+			return null;
+		}
+		return result;
+	}
+	/**
+	 * Filter all blobs which feature (specified by the methodName) is higher than 
+	 * the lowerLimit or lower than the upper limit.
+	 * For instance: filterBlobs(Blob.GETENCLOSEDAREA,40,100) will filter all blobs between 40 and 100 pixel².
+	 * @param methodName Getter method of the blob feature (double as return value).
+	 * @param lowerLimit Lower limit for the feature to filter blobs.
+	 * @param upperLimit Upper limit for the feature to filter blobs.
+	 * @return The filtered blobs.
+	 * @throws NoSuchMethodException 
+	 */
+	private ManyBlobs filterBlobs2(double lowerLimit, double upperLimit, String methodName, Object... methodparams) throws NoSuchMethodException{
 		ManyBlobs blobs = new ManyBlobs();
 		blobs.setImage(binaryImage);
 		@SuppressWarnings("rawtypes")
@@ -225,7 +246,13 @@ public class ManyBlobs extends ArrayList<Blob> {
 					methodvalue = m.invoke(this.get(i), methodparams);
 				}
 				else if(methodIsCustom){
-					methodvalue =  m.invoke((Blob.customFeatures.get(featureIndex)), methodparams);
+					try{
+						methodvalue =  this.get(i).evaluateCustomFeature(methodName, methodparams);
+					}
+					catch(NoSuchMethodException e){
+						throw new NoSuchMethodException("The method " + methodName + " was not found");
+					}
+					
 				}
 				else{
 		
@@ -273,8 +300,8 @@ public class ManyBlobs extends ArrayList<Blob> {
 				}
 			}
 		} catch (NoSuchMethodException e) {
-			IJ.log("Method not found: " + e.getMessage());
-			e.printStackTrace();
+			throw new NoSuchMethodException("The method " + methodName + " was not found");
+	
 		} catch (SecurityException e) {
 			IJ.log(e.getMessage());
 		
@@ -316,9 +343,18 @@ public class ManyBlobs extends ArrayList<Blob> {
 	 * @param methodName Getter method of the blob feature (double as return value).
 	 * @param limits First Element is the lower limit, second element is the upper limit
 	 * @return The filtered blobs.
+	 * @throws NoSuchMethodException 
 	 */
 	public ManyBlobs filterBlobs(double[] limits, String methodName, Object... methodparams){
-		return filterBlobs(limits[0], limits[1], methodName,methodparams);
+		ManyBlobs result = null;
+		try {
+			result = filterBlobs2(limits[0], limits[1], methodName,methodparams);
+		} catch (NoSuchMethodException e) {
+				IJ.error("The method " + methodName + "does not exist");
+				e.printStackTrace();
+				return null;
+		}
+		return result;
 	}
 	/**
 	 * Filter all blobs which feature (specified by the methodName) is higher than 
@@ -327,9 +363,18 @@ public class ManyBlobs extends ArrayList<Blob> {
 	 * @param methodName Getter method of the blob feature (double as return value).
 	 * @param lowerlimit Lower limit for the feature to filter blobs.
 	 * @return The filtered blobs.
+	 * @throws NoSuchMethodException 
 	 * */
-	public ManyBlobs filterBlobs(double lowerlimit, String methodName, Object... methodparams){
-		return filterBlobs(lowerlimit, Double.POSITIVE_INFINITY, methodName, methodparams);
+	public ManyBlobs filterBlobs(double lowerlimit, String methodName, Object... methodparams) {
+		ManyBlobs result = null;
+		try {
+			result = filterBlobs2(lowerlimit, Double.POSITIVE_INFINITY, methodName, methodparams);
+		} catch (NoSuchMethodException e) {
+			IJ.error("The method " + methodName + "does not exist");
+			e.printStackTrace();
+			return null;
+		}
+		return result;
 	}
 
 
