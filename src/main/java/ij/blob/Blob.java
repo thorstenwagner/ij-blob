@@ -1051,7 +1051,7 @@ public class Blob {
 	/**
 	 * Method name of getMaximumInscribedCircle (for filtering).
 	 */
-	public final static String GETMAXIMUMINSCRIBEDCIRCLE = "getMaximumInscribedCircle";
+	public final static String GETDIAMETERMAXIMUMINSCRIBEDCIRCLE = "getDiamaterMaximumInscribedCircle";
 	public double getDiamaterMaximumInscribedCircle() {
 		ImagePlus help = generateBlobImage(this);
 		ImageProcessor ipHelp = help.getProcessor();
