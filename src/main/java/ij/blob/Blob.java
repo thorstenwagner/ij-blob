@@ -1069,9 +1069,9 @@ public class Blob {
 	public static ImagePlus generateBlobImage(Blob b){
 		Rectangle r = b.getOuterContour().getBounds();
 		r.setBounds(r.x, r.y, (int)r.getWidth()+1, (int)r.getHeight()+1);
-		ImagePlus help = NewImage.createByteImage("", r.width, r.height, 1, NewImage.FILL_WHITE);
+		ImagePlus help = NewImage.createByteImage("", r.width+2, r.height+2, 1, NewImage.FILL_WHITE);
 		ImageProcessor ip = help.getProcessor();
-		b.draw(ip, Blob.DRAW_HOLES, -r.x, -r.y);
+		b.draw(ip, Blob.DRAW_HOLES, -(r.x-1), -(r.y-1));
 		help.setProcessor(ip);
 		return help;
 	}
