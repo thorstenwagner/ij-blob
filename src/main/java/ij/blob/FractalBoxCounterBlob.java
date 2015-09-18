@@ -3,7 +3,6 @@ import java.awt.*;
 import java.util.*;
 import ij.*;
 import ij.process.*;
-import ij.gui.*;
 import ij.measure.*;
 import ij.util.*;
 /**
@@ -59,7 +58,7 @@ class FractalBoxCounterBlob {
 		ImageProcessor ip = help.getProcessor();
 		blob.draw(ip, Blob.DRAW_HOLES, -r.x, -r.y);
 		*/
-		ImagePlus blobImage = blob.generateBlobImage(blob);
+		ImagePlus blobImage = Blob.generateBlobImage(blob);
 		ImageProcessor ip = blobImage.getProcessor();
 		imp = new ImagePlus("abc",ip);
 		boxCountSums = new float[boxSizes.length];

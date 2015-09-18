@@ -1,6 +1,5 @@
 package ij.blob.tests;
 
-import ij.IJ;
 import ij.blob.*;
 
 public class ExampleBlobFeature extends CustomBlobFeature {

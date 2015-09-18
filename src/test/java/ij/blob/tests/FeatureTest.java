@@ -22,8 +22,6 @@ public class FeatureTest {
 		mb.findConnectedComponents();
 		MyBlobFeature test = new MyBlobFeature();
 		Blob.addCustomFeature(test);
-		int a  = 10;
-		float c = 1.5f;
 		ManyBlobs filtered = mb.filterBlobs(0,10, "LocationFeature",ip.getWidth(),ip.getHeight());
 		assertEquals(0, filtered.size()); //All blobs have a greater distance. So it should be 0
 		

@@ -858,6 +858,7 @@ public class Blob {
 		return hull;
 	}
 	
+	@SuppressWarnings("unused")
 	private double getAreaOfChainCode(int[] cc){
 		int B = 1;
 		double A = 0;

@@ -21,7 +21,6 @@ package ij.blob;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.NewImage;
-import ij.plugin.NextImageOpener;
 import ij.process.ColorProcessor;
 import ij.process.ImageStatistics;
 
@@ -217,8 +216,7 @@ public class ManyBlobs extends ArrayList<Blob> {
 				methodInBuild = false;
 				
 			}
-			int featureIndex = 0;
-			int methodIndex = 0;
+
 			if(!methodInBuild){
 				for(int i = 0; i < Blob.customFeatures.size(); i++){
 					Method customMethods[] = Blob.customFeatures.get(i).getClass().getDeclaredMethods();
@@ -226,8 +224,6 @@ public class ManyBlobs extends ArrayList<Blob> {
 						if(customMethods[j].getName() == methodName){
 							
 							methodIsCustom = true;
-							methodIndex = j;
-							featureIndex = i;
 							m = customMethods[j];
 							break;
 						}

@@ -3,7 +3,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
 
-import ij.IJ;
 import ij.ImagePlus;
 import ij.blob.Blob;
 import ij.blob.ManyBlobs;
