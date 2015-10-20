@@ -211,6 +211,27 @@ public class Blob {
 	}
 	
 	/**
+	 * @return Outer contour as traced roi
+	 */
+	public Roi getOuterContourAsROI(){
+		Polygon p = getOuterContour();
+		int n = p.npoints;
+		float[] x = new float[p.npoints];
+		float[] y = new float[p.npoints];
+		
+		for (int j=0; j<n; j++) {
+		     x[j] = p.xpoints[j]+0.5f;
+		     y[j] = p.ypoints[j]+0.5f;
+		}
+		
+		Roi roi = new PolygonRoi(x,y,n,Roi.TRACED_ROI);
+		
+		Roi.setColor(Color.green);
+		
+		return roi;
+	}
+	
+	/**
 	 * Draws the Blob with or without its holes.
 	 * @param ip The ImageProcesser in which the blob has to be drawn.
 	 * @param options Drawing Options are DRAW_HOLES, DRAW_CONVEX_HULL, DRAW_LABEL. Combinations with | are possible.
