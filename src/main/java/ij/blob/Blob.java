@@ -51,6 +51,7 @@ public class Blob {
 	public final static int DRAW_HOLES = 1;
 	public final static int DRAW_CONVEX_HULL = 2;
 	public final static int DRAW_LABEL = 4;
+	
 	private static Color defaultColor = Color.black;
 	
 
@@ -978,7 +979,7 @@ public class Blob {
 		
 		Blob helpblob = new Blob(polyPoints, -1);
 		ImagePlus imp = generateBlobImage(helpblob);
-		areaConvexHull = imp.getStatistics().getHistogram()[0];
+		areaConvexHull = imp.getStatistics().getHistogram()[0]*cal.pixelHeight*cal.pixelWidth;
 		//areaConvexHull = getArea(polyPoints)*cal.pixelHeight*cal.pixelWidth;
 		return areaConvexHull;
 	}
