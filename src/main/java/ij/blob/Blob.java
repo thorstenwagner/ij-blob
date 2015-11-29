@@ -980,8 +980,8 @@ public class Blob {
 		Blob helpblob = new Blob(polyPoints, -1);
 		ImagePlus imp = generateBlobImage(helpblob);
 		areaConvexHull = imp.getStatistics().getHistogram()[0]*cal.pixelHeight*cal.pixelWidth;
-		//areaConvexHull = getArea(polyPoints)*cal.pixelHeight*cal.pixelWidth;
 		return areaConvexHull;
+		
 	}
 	
 	/**
