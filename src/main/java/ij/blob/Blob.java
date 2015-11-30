@@ -740,8 +740,7 @@ public class Blob {
 		dummy.setCalibration(cal);
 		roi.setImage(dummy);
 
-		
-		return peri;
+		return peri*cal.pixelHeight;
 	}
 	
 	private int[] contourToChainCode(Polygon contour) {
