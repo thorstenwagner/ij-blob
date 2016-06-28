@@ -14,6 +14,15 @@ import org.junit.Test;
 
 public class FeatureTest {
 	
+	@Test 
+	public void testConvexHullFeature(){
+		URL url = this.getClass().getClassLoader().getResource("square100x100_minus30x30.png");
+		ImagePlus ip = new ImagePlus(url.getPath());
+		ManyBlobs mb = new ManyBlobs(ip);
+		mb.findConnectedComponents();
+		assertEquals(4, mb.get(0).getConvexHull().npoints-1);
+	}
+	
 	@Test
 	public void testSpecialBlobFeature() throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("3blobs.tif");
