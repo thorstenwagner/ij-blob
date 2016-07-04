@@ -3,7 +3,7 @@
 
 	<groupId>de.biomedical-imaging.ij</groupId>
 	<artifactId>ij_blob</artifactId>
-	<version>1.4.9</version>
+	<version>1.4.10-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>IJBlob</name>
