@@ -366,6 +366,16 @@ public class Blob {
 		return proi.getFeretValues()[2];
 	}
 	
+	public final static String GETAREAEQUIVALENTSPHERICALDIAMETER = "getAreaEquivalentSphericalDiameter";
+	/**
+	 * @return Diameter for a circle with the same area as the blob
+	 */
+	public double getAreaEquivalentSphericalDiameter(){
+		double area = getEnclosedArea();
+		double radius = Math.sqrt(area/Math.PI);
+		return 2*radius;
+	}
+	
 	/**
 	 * Region-Based Moments Definition of "Gorman et. al. Practical Algorithms for Image Analysis" (p. 157).
 	 * (computational expensive!)

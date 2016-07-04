@@ -70,6 +70,16 @@ public class FeatureTest {
 	}
 	
 	@Test
+	public void testGetAreaEquivalentSphericalDiameter() {
+		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
+		ImagePlus ip = new ImagePlus(url.getPath());
+		ManyBlobs mb = new ManyBlobs(ip);
+		mb.findConnectedComponents();
+		double diameter = mb.get(0).getAreaEquivalentSphericalDiameter();
+		assertEquals(2*30, diameter,0.5);
+	}
+	
+	@Test
 	public void testFilterCustomBlobFeature() throws NoSuchMethodException {
 		URL url = this.getClass().getClassLoader().getResource("circle_r30.tif");
 		ImagePlus ip = new ImagePlus(url.getPath());
