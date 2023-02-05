@@ -708,6 +708,11 @@ public class Blob {
 		return label;
 	}
 	
+	public void setLabel(int newlabel) {
+		label = newlabel;
+	}
+	
+	
 	/**
 	 * Method name of getPerimeter (for filtering).
 	 */
