@@ -26,6 +26,7 @@ import ij.plugin.CanvasResizer;
 import ij.process.ByteProcessor;
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
+import ij.process.ImageStatistics;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -51,6 +52,7 @@ class ConnectedComponentLabeler {
 	private boolean removeBorder = false;
 	private int offSetX = 0;
 	private int offsetY = 0;
+	private boolean isBinary = true;
 	/*
 	 * 
 	 * The read-order of the neighberhood of p.
@@ -70,11 +72,44 @@ class ConnectedComponentLabeler {
 		this.imp = imp;
 		this.BACKGROUND = BACKGROUND;
 		this.OBJECT = OBJECT;
+		ImageStatistics stats = imp.getStatistics();
 		
+		this.isBinary = (stats.histogram[0] + stats.histogram[255]) == stats.pixelCount;
+	}
+	
+	public void doConnectedComponents() {
+		if(!this.isBinary) {
+			BACKGROUND = 0;
+			OBJECT = 255;
 
-		addWhiteBorder(imp);
+			ImagePlus helpimp = imp.duplicate();
+			helpimp.setCalibration(imp.getCalibration());
+			
+			ImageStatistics stats = helpimp.getStatistics();
+			int min_label = (int)stats.min+1;
+			int max_label = (int)stats.max;
 
-		labledImage = new ColorProcessor(this.imp.getWidth(), this.imp.getHeight());
+			for(int threshold = min_label; threshold <= max_label; threshold++) {
+				ImageProcessor hlp = helpimp.getProcessor().duplicate();
+				hlp.setThreshold(threshold, threshold);
+				ByteProcessor mask = hlp.createMask();
+				ImagePlus mask_imp = new ImagePlus("", mask);
+				mask_imp.setCalibration(imp.getCalibration());
+				addWhiteBorder(mask_imp);
+				if(labledImage == null) {
+					labledImage = new ColorProcessor(this.imp.getWidth(), this.imp.getHeight());
+				}
+	
+				doConnectedComponents2(mask_imp);
+				
+				System.out.println("count"+this.labelCount+" asd"+allBlobs.size());
+			}
+		}
+		else {
+			addWhiteBorder(imp);
+			labledImage = new ColorProcessor(this.imp.getWidth(), this.imp.getHeight());
+			doConnectedComponents2(imp);
+		}
 		
 	}
 	
@@ -82,7 +117,7 @@ class ConnectedComponentLabeler {
 	 * Start the Connected Component Algorithm
 	 * @see  F. Chang, A linear-time component-labeling algorithm using contour tracing technique, Computer Vision and Image Understanding, vol. 93, no. 2, pp. 206-220, 2004.
 	 */
-	public void doConnectedComponents() {
+	public void doConnectedComponents2(ImagePlus imp) {
 		
 		ImageProcessor ip = imp.getProcessor();
 		Calibration c = imp.getCalibration();
@@ -97,7 +132,7 @@ class ConnectedComponentLabeler {
 			int offset = i * w;
 			for (int j = roi.x; j < roi.x + roi.width; ++j) {
 				value = pixels[offset + j] & 255;
-			
+				//System.out.println("Value "+value+" pixel "+pixels[offset + j]);
 				if (value == OBJECT) {
 					
 					if (isNewExternalContour(j, i, proc) && hasNoLabel(j, i)) {

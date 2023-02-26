@@ -50,6 +50,7 @@ public class ManyBlobs extends ArrayList<Blob> {
 	private static final long serialVersionUID = 1L;
 	private ImagePlus binaryImage = null;
 	private ImagePlus labeledImage = null;
+	private boolean isBinary = false;
 	private int BACKGROUND = 255;
 	private int OBJECT = 0;
 
@@ -93,11 +94,15 @@ public class ManyBlobs extends ArrayList<Blob> {
 		this.binaryImage = imp;
 		ImageStatistics stats = imp.getStatistics();
 		
-		boolean notBinary = (stats.histogram[0] + stats.histogram[255]) != stats.pixelCount;
+		this.isBinary = (stats.histogram[0] + stats.histogram[255]) == stats.pixelCount;
 		boolean toManyChannels = (imp.getNChannels()>1);
-		boolean wrongBitDepth = (imp.getBitDepth()!=8);
-		if (notBinary | toManyChannels | wrongBitDepth) {
-			throw new java.lang.IllegalArgumentException("Wrong Image Format. IJ Blob only supports 8-bit, single-channel binary images");
+		boolean wrongBitDepth = !((imp.getBitDepth()==8) || (imp.getBitDepth()==16));
+		if(!this.isBinary) {
+			this.BACKGROUND = -1;
+			this.OBJECT = -1;
+		}
+		if (toManyChannels | wrongBitDepth) {
+			throw new java.lang.IllegalArgumentException("Wrong Image Format. IJ Blob only supports 8-bit or 16 bit images, single-channel binary images");
 		}
 	}
 	

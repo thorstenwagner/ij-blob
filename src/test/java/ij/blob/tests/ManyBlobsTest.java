@@ -99,6 +99,16 @@ public class ManyBlobsTest {
 		assertEquals(1, mb.size(),0);
 	}
 	
+	@Test
+	public void testMultiColor() {
+		
+		URL url = this.getClass().getClassLoader().getResource("multicolor_image.tif");
+		ImagePlus ip = new ImagePlus(url.getPath());
+		ManyBlobs mb = new ManyBlobs(ip);
+		mb.findConnectedComponents();
+		assertEquals(3, mb.size(),0);
+	}
+	
 	@Test (expected=RuntimeException.class)
 	public void testNewObject_findConnectedComponents() {
 		ManyBlobs t = new ManyBlobs();
