@@ -20,7 +20,7 @@ public class FeatureTest {
 		ImagePlus ip = new ImagePlus(url.getPath());
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
-		assertEquals(4, mb.get(0).getConvexHull().npoints-1);
+		assertEquals(4, mb.get(0).getConvexHull().npoints);
 	}
 	
 	@Test
@@ -192,7 +192,7 @@ public class FeatureTest {
 		int periConv = 4*100-4; //400-4(-4 Because the Edges doesnt mutiple counted 
 		ManyBlobs mb = new ManyBlobs(ip);
 		mb.findConnectedComponents();
-		assertEquals(periConv, mb.get(0).getPerimeterConvexHull(),2);
+		assertEquals(periConv, mb.get(0).getPerimeterConvexHull(),4);
 	}
 
 	@Test

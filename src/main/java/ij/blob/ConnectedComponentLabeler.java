@@ -78,6 +78,8 @@ class ConnectedComponentLabeler {
 	}
 	
 	public void doConnectedComponents() {
+		long timeA = System.currentTimeMillis();
+
 		if(!this.isBinary) {
 			BACKGROUND = 0;
 			OBJECT = 255;
@@ -88,21 +90,48 @@ class ConnectedComponentLabeler {
 			ImageStatistics stats = helpimp.getStatistics();
 			int min_label = (int)stats.min+1;
 			int max_label = (int)stats.max;
-
+		
 			for(int threshold = min_label; threshold <= max_label; threshold++) {
 				ImageProcessor hlp = helpimp.getProcessor().duplicate();
-				hlp.setThreshold(threshold, threshold);
-				ByteProcessor mask = hlp.createMask();
-				ImagePlus mask_imp = new ImagePlus("", mask);
+				int toff=0;
+				if(threshold == max_label) {
+					toff=1;
+				}
+				hlp.setThreshold(threshold, threshold+toff);
+
+				
+				//ByteProcessor mask = ;
+				ImagePlus mask_imp = new ImagePlus("", hlp.createMask());
 				mask_imp.setCalibration(imp.getCalibration());
 				addWhiteBorder(mask_imp);
+				
 				if(labledImage == null) {
-					labledImage = new ColorProcessor(this.imp.getWidth(), this.imp.getHeight());
+					labledImage = new ColorProcessor(mask_imp.getWidth(), mask_imp.getHeight());
 				}
-	
+				else {
+					// Reset all 
+					//ImagePlus img = new ImagePlus("", labledImage);
+					//ColorProcessor proc = (ColorProcessor) img.getProcessor();
+					int[] pixels = (int[]) labledImage.getPixels();
+					int w = labledImage.getWidth();
+					int h = labledImage.getHeight();
+					int value;
+					for (int i = 0; i < h; ++i) {
+						int offset = i * w;
+						for (int j = 0; j < w; ++j) {
+							value = pixels[offset + j];
+							if(value==-1){
+								pixels[offset + j] = BACKGROUND;
+							}
+						}
+					}
+					labledImage.setPixels(pixels);
+					
+				}
+				
+
 				doConnectedComponents2(mask_imp);
 				
-				System.out.println("count"+this.labelCount+" asd"+allBlobs.size());
 			}
 		}
 		else {
@@ -155,12 +184,12 @@ class ConnectedComponentLabeler {
 
 						}
 						try{
-						Polygon innerContour = traceContour(j, i, proc, label,
-								2);
-						innerContour.translate(offSetX, offsetY);
-						getBlobByLabel(label).addInnerContour(innerContour);
+							Polygon innerContour = traceContour(j, i, proc, label,
+									2);
+							innerContour.translate(offSetX, offsetY);
+							getBlobByLabel(label).addInnerContour(innerContour);
 						}catch(Exception e){
-						  
+							IJ.log(e.toString());
 							IJ.log("x " + j + " y " +i + " label " + label);
 						}
 
@@ -242,7 +271,7 @@ class ConnectedComponentLabeler {
 		boolean equalsStartpoint = false;
 		do {
 			contour.addPoint(nextPoint.x, nextPoint.y);
-			labledImage.set(nextPoint.x, nextPoint.y, label);
+			labledImage.putPixel(nextPoint.x, nextPoint.y, label);
 			equalsStartpoint = nextPoint.equals(startPoint);
 			nextPoint = nextPointOnContour(nextPoint, proc, -1);
 		} while (!equalsStartpoint || !nextPoint.equals(T));
