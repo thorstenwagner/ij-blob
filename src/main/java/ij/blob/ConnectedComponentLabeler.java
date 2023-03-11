@@ -102,9 +102,23 @@ class ConnectedComponentLabeler {
 				
 				//ByteProcessor mask = ;
 				ImagePlus mask_imp = new ImagePlus("", hlp.createMask());
+				
+				/*
+				ImageStatistics stats_mask = mask_imp.getStatistics();
+				if(stats_mask.histogram[255]==0) {
+					IJ.log("NO OBJECTS");
+					continue;
+				}
+				IJ.log("OBject size"+ stats_mask.histogram[255]);
+				*/
 				mask_imp.setCalibration(imp.getCalibration());
 				addWhiteBorder(mask_imp);
 				
+				labledImage = new ColorProcessor(mask_imp.getWidth(), mask_imp.getHeight());
+				/*
+				 *To reduce the number of labels its possible to apply a LUT and then convert this to grey values again.
+				 */
+				/*
 				if(labledImage == null) {
 					labledImage = new ColorProcessor(mask_imp.getWidth(), mask_imp.getHeight());
 				}
@@ -125,11 +139,11 @@ class ConnectedComponentLabeler {
 							}
 						}
 					}
-					labledImage.setPixels(pixels);
+					//labledImage.setPixels(pixels);
 					
 				}
-				
-
+				*/
+				//IJ.save(mask_imp, "C:\\Users\\m21006-w\\Desktop\\masks\\mask"+threshold+".tiff");
 				doConnectedComponents2(mask_imp);
 				
 			}
