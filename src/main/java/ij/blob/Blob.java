@@ -51,6 +51,7 @@ public class Blob {
 	public final static int DRAW_HOLES = 1;
 	public final static int DRAW_CONVEX_HULL = 2;
 	public final static int DRAW_LABEL = 4;
+	public final static int DRAW_CONTOUR = 8;
 	
 	private static Color defaultColor = Color.black;
 	
@@ -172,10 +173,21 @@ public class Blob {
 		return value;
 	}
 	
+	private Color getCounterColor() {
+		if(defaultColor==Color.white){
+			return Color.BLACK;
+		}
+		return Color.white;
+	}
+	
 	void draw(ImageProcessor ip, int options, Color col){
 		ip.setColor(col);
 		fillPolygon(ip, outerContour, false);
 		
+		if((options&DRAW_CONTOUR)>0) {
+			ip.setColor(getCounterColor());
+			ip.drawPolygon(outerContour);
+		}
 		
 		if((options&DRAW_HOLES)>0){
 			for(int i = 0; i < innerContours.size(); i++) {
@@ -663,6 +675,7 @@ public class Blob {
 		ip.setRoi(r);
 		ImageProcessor objectMask = pf.getMask(r.width, r.height);
 		ip.fill(objectMask);
+		
 		if(!internContour){
 			ip.drawPolygon(p);
 		}
